@@ -13,11 +13,12 @@ import { Theme } from '../../../../intefaces/theme';
 import { FormsModule } from '@angular/forms';
 import { AjoutSessionComponent } from "./ajout-session/ajout-session.component";
 import { SelecteurBoiteCommandeAdminService } from '../../service/selecteur-boite-commande-admin.service';
+import { ParticipantSessionComponent } from "./participant-session/participant-session.component";
 
 @Component({
   selector: 'app-boite-randonee',
   standalone: true,
-  imports: [CommonModule, AjoutRandonneeComponent, ModifRandonneeComponent, FormsModule, AjoutSessionComponent],
+  imports: [CommonModule, AjoutRandonneeComponent, ModifRandonneeComponent, FormsModule, AjoutSessionComponent, ParticipantSessionComponent],
   templateUrl: './boite-randonee.component.html',
   styleUrl: './boite-randonee.component.scss'
 })
@@ -31,6 +32,9 @@ export class BoiteRandoneeComponent implements OnInit {
   afficherComposant: boolean = true;
   afficherAjout: boolean = false;
   afficherModif: boolean = false;
+  afficherParticipantSession: boolean = false;
+  idSessionPourPaticipantSession: number = 0;
+  idParticipantSession: number = 0;
 
   // Injection des services nécessaires
   private appeleAPI = inject(ApiFetcherRandoneeService);
@@ -139,12 +143,32 @@ export class BoiteRandoneeComponent implements OnInit {
     }
   }
 
+
+  switchAfficherPaticipantSession(estAfficher:boolean , idSession?: number){
+    if(estAfficher){
+      if(idSession != undefined){
+        this.afficherParticipantSession = true;
+        this.idSessionPourPaticipantSession = idSession;
+      }
+      else{
+        alert("erreur non supporter");
+      }
+      
+    }
+    else{
+      this.afficherParticipantSession = false;
+      this.rechargerComposant();
+    }
+  }
+
   // Méthode pour filtrer les sessions d'une randonnée spécifique
   afficherSession(idRandonnee: number): Observable<Session[]> {
     return this.sessions$.pipe(
       map(sessions => sessions.filter(session => session.randonneeId === idRandonnee))
     );
   }
+
+  
 
   // Méthode pour mettre à jour le thème d'une session
   miseAJourThemeSession(sessionAMetreAJour: Session): void {
