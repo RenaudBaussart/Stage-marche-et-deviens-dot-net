@@ -37,6 +37,25 @@ export class ApiFetcherUtilisateurService {
         })
       );
   }
+  RecuperUtilisateurParId(id: number):Observable<any>{
+    return this.httpClient.get<Utilisateur>(this.endPointUrl + `/${id}` , {observe: 'response'})
+    .pipe(
+      // Traitement de la réponse
+      map(response => {        
+        // Vérification du statut de la réponse
+        if (response.status >= 200 && response.status < 300) {
+          return response.body;
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      }),
+      // Gestion des erreurs
+      catchError(error => {
+        console.error('Error:', error);
+        return of(null);
+      })
+    );
+  }
 
   // Méthode pour ajouter un nouveau Posseder
   AjouterUtilisitateur(utilisateurAAjouter : Utilisateur): Observable<any> {

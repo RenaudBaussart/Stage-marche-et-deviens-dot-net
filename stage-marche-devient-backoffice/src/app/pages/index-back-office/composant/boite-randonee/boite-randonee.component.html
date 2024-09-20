@@ -94,6 +94,7 @@
 
               <section class="conteneur_supression_session">
                 <button (click)="supressionSession(session.idSession!)">supprimer</button>
+                <button (click)="switchAfficherPaticipantSession(true,session.idSession!)">Gestion participant</button>
               </section>
             </div>
           </section>
@@ -107,6 +108,8 @@
 <button class="quitter_view_box_button" (click)=" switchAfficherAjoutRandonnee(false)" *ngIf="afficherAjout">X</button>
 <button class="quitter_view_box_button" (click)=" switchAfficherModif(null)" *ngIf="afficherModif">X</button>
 <button class="quitter_view_box_button" (click)="switchAfficherAjoutSession()" *ngIf="afficherAjoutSession">X</button>
+<button class="quitter_view_box_button" (click)="switchAfficherPaticipantSession(false)" *ngIf="afficherAjoutSession">X</button>
+
 
 <ng-container *ngIf="afficherAjout == true">
   <div class="view_screen_shadow_background">
@@ -123,5 +126,10 @@
 <ng-container *ngIf="afficherAjoutSession">
   <div class="view_screen_shadow_background">
     <app-ajout-session [idRandonnee]="idRandonneSessionAAjouter" class="boit_ajout_session"></app-ajout-session>
+  </div>
+</ng-container>
+<ng-container *ngIf="afficherParticipantSession">
+  <div class="view_screen_shadow_background">
+    <app-participant-session [idSession]="idSessionPourPaticipantSession" class="boit_ajout_session"></app-participant-session>
   </div>
 </ng-container>

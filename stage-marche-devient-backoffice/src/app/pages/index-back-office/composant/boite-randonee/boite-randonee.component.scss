@@ -247,6 +247,8 @@
                     .conteneur_supression_session{
                         button{
                             justify-self: center; justify-content: center;
+                        }
+                        button :last-child{
                             margin-left: 2vw;
                         }
                     }

@@ -1,0 +1,51 @@
+<section class="conteneur_participant-session">
+    <section class="conteneur_liste_participant_session">
+            <h3 class="titre_1 titre_section_list">Id/Nom d'utilisateur</h3>
+            <h3 class="titre_2 titre_section_list">Nombre de place</h3>
+            <h3 class="titre_3 titre_section_list">Ref reservation</h3>
+            <h3 class="titre_4 titre_section_list">Date reservation</h3>
+            <h3 class="titre_5 titre_section_list">Validation reservation</h3>
+            <h3 class="titre_6 titre_section_list">Action</h3>
+        <ng-container *ngIf="(listeReservationSession$ | async) as listeReservation">
+            <ul class="list_participant_session" *ngIf="listeReservation.length < 1 else listeVide">
+                <li *ngFor="let reservation of listeReservation">
+
+                    <ng-container *ngIf="(recupUtilisateurParId(reservation.idUtilisateur) | async) as utilisateur">
+
+                        <p>{{utilisateur.idUtilisateur}} / {{utilisateur.Nom}}</p>
+
+                        <p>{{reservation.nbrParticipantsInscrits}}</p>
+
+                        <p>{{reservation.refReservation}}</p>
+
+
+                        <ng-container *ngIf="reservation.datePaiement != null else paimentRequis">
+                            <p>{{reservation.datePaiement}}</p>
+                        </ng-container>
+                        <ng-template #paimentRequis>
+                            <p>en attente du paiment</p>
+                        </ng-template>
+
+                        <ng-container *ngIf="reservation.validationReservation else reservationNonValide">
+                            <p>oui</p>
+                        </ng-container>
+                        <ng-template #reservationNonValide>
+                            <p>Non</p>
+                        </ng-template>
+
+                        <section class="button_action">
+                            <button (click)="suprimerReserver(reservation.idReserver)">Supprimer</button>
+                            <button (click)="definirDatePaiment(reservation)">definir une date de paiment</button>
+                            <button (click)="validerReservation(reservation)">Validé la reservation</button>
+                        </section>
+
+                    </ng-container>
+                </li>
+            </ul>
+            <ng-template #listeVide>
+                <p>Aucun participant pour le moment</p>
+            </ng-template>
+        </ng-container>
+
+    </section>
+</section>

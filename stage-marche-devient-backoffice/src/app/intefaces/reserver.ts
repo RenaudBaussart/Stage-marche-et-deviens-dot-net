@@ -3,8 +3,8 @@ export interface Reserver {
     idUtilisateur: number,
     idSession: number,
     nbrParticipantsInscrits: number,
-    ref: string,
+    refReservation: string,
     datePaiement: string,
-    validation: boolean,
+    validationReservation: boolean,
     nbrActuelParticipant: number,
 }
